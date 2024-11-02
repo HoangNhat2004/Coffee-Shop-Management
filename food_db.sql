@@ -37,11 +37,6 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `name`, `password`) VALUES
-(1, 'admin', '6216f8a75fd5bb3d5f22b6f9958cdede3fc086c2'),
-(3, 'mithun', '6216f8a75fd5bb3d5f22b6f9958cdede3fc086c2'),
-(5, 'adminmk', '6216f8a75fd5bb3d5f22b6f9958cdede3fc086c2');
-
 -- --------------------------------------------------------
 
 --
@@ -87,9 +82,6 @@ CREATE TABLE `employee` (
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`id`, `name`, `age`, `sex`, `phone`, `email`, `address`, `password`) VALUES
-(1, 'employee', 22, 'male', 1521509030, 'mk@gmial.com', 'badda, Dhaka 1212', '6216f8a75fd5bb3d5f22b6f9958cdede3fc086c2'),
-(4, 'mithun', 25, 'male', 1521509031, '6884887987@gmial.com', 'dhaka', '6216f8a75fd5bb3d5f22b6f9958cdede3fc086c2');
 
 -- --------------------------------------------------------
 
@@ -110,10 +102,6 @@ CREATE TABLE `messages` (
 -- Dumping data for table `messages`
 --
 
-INSERT INTO `messages` (`id`, `user_id`, `name`, `email`, `number`, `message`) VALUES
-(1, 1, 'mithun', 'dfvvfdgf@gmaidsd.com', '845595', 'good'),
-(2, 0, 'mxn vhxbcv', 'mk@gmial.com', '684684684', 'hcjhscbasjcabs'),
-(3, 1, 'asif', 'mk@gmail.com', '89898', 'good site');
 
 -- --------------------------------------------------------
 
@@ -139,9 +127,6 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `name`, `number`, `email`, `method`, `address`, `total_products`, `total_price`, `placed_on`, `payment_status`) VALUES
-(7, 1, 'mithun', '0152150903', 'mi@gmail.com', 'credit card', '12, 5, Badda, xyz, dhaka, xyz, bangladesh - 1212', 'Cortado (20 x 1) - Cappuccino (20 x 1) - Macchiato (20 x 1) - ', 60, '2022-09-18', 'pending'),
-(8, 1, 'mithun', '0152150903', 'mi@gmail.com', 'bkash', '12, 5, Badda, xyz, dhaka, xyz, bangladesh - 1212', 'Cortado (20 x 1) - ', 20, '2022-09-18', 'pending');
 
 -- --------------------------------------------------------
 
@@ -215,8 +200,6 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `number`, `password`, `address`) VALUES
-(1, 'mithun', 'mi@gmail.com', '0152150903', '6216f8a75fd5bb3d5f22b6f9958cdede3fc086c2', '12, 5, Badda, xyz, dhaka, xyz, bangladesh - 1212');
 
 --
 -- Indexes for dumped tables

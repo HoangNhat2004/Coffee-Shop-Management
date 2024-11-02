@@ -57,9 +57,9 @@
 
             <div class="swiper-slide slide">
                <div class="content">
-                  <span>order online</span>
+                  <span>Order online</span>
                   <h3>delicious pizza</h3>
-                  <a href="menu.html" class="btn">see menus</a>
+                  <a href="menu.php" class="btn">see menus</a>
                </div>
                <div class="image">
                   <img src="images/home-img-1.png" alt="">
@@ -68,9 +68,9 @@
 
             <div class="swiper-slide slide">
                <div class="content">
-                  <span>order online</span>
+                  <span>Order online</span>
                   <h3>chezzy hamburger</h3>
-                  <a href="menu.html" class="btn">see menus</a>
+                  <a href="menu.php" class="btn">see menus</a>
                </div>
                <div class="image">
                   <img src="images/home-img-2.png" alt="">
@@ -79,9 +79,9 @@
 
             <div class="swiper-slide slide">
                <div class="content">
-                  <span>order online</span>
+                  <span>Order online</span>
                   <h3>rosted chicken</h3>
-                  <a href="menu.html" class="btn">see menus</a>
+                  <a href="menu.php" class="btn">see menus</a>
                </div>
                <div class="image">
                   <img src="images/home-img-3.png" alt="">
@@ -96,25 +96,6 @@
 
    </section>
 
-   <!-- booking Area -->
-
-   <section class="booking">
-      <h1 class="title"> COFFEE BUILD YOUR BASE</h1>
-
-
-      <div class="bookinput">
-         <input type="text" value=" 1 person">
-         <label for="for">
-            <h3>FOR</h3>
-         </label>
-         <input type="date">
-         <label for="at">
-            <h3 class="p-2">AT</h3>
-         </label>
-         <input type="time" value="7.00pm">
-         <input type="submit" class="btn" value="BOOK A TABLE">
-      </div>
-   </section>
 
    <!-- category Area -->
 

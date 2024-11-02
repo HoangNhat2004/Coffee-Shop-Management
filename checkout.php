@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
    if ($check_cart->rowCount() > 0) {
 
       if ($address == '') {
-         $message[] = 'please add your address!';
+         $message[] = 'Please add your address!';
       } else {
 
          $insert_order = $conn->prepare("INSERT INTO `orders`(user_id, name, number, email, method, address, total_products, total_price) VALUES(?,?,?,?,?,?,?,?)");
@@ -41,10 +41,10 @@ if (isset($_POST['submit'])) {
          $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
          $delete_cart->execute([$user_id]);
 
-         $message[] = 'order placed successfully!';
+         $message[] = 'Order placed successfully!';
       }
    } else {
-      $message[] = 'your cart is empty';
+      $message[] = 'Your cart is empty';
    }
 }
 
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>checkout</title>
+   <title>Checkout</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
 
    <div class="heading">
       <h3>checkout</h3>
-      <p><a href="home.php">home</a> <span> / checkout</span></p>
+      <p><a href="home.php">Home</a> <span> / Checkout</span></p>
    </div>
 
    <section class="checkout">
@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
                echo '<p class="empty">your cart is empty!</p>';
             }
             ?>
-            <p class="grand-total"><span class="name">grand total :</span><span class="price">$<?= $grand_total; ?></span></p>
+            <p class="grand-total"><span class="name">Grand total :</span><span class="price">$<?= $grand_total; ?></span></p>
             <a href="cart.php" class="btn">veiw cart</a>
          </div>
 
@@ -129,9 +129,9 @@ if (isset($_POST['submit'])) {
                                                             } ?></span></p>
             <a href="update_address.php" class="btn">update address</a>
             <select name="method" class="box" required>
-               <option value="" disabled selected>select payment method --</option>
-               <option value="cash on delivery">cash on delivery</option>
-               <option value="bkash">bkash</option>
+               <option value="" disabled selected>Select payment method --</option>
+               <option value="Cash on delivery">Cash on delivery</option>
+               <option value="E-payment">E-payment</option>
             </select>
             <input type="submit" value="place order" class="btn <?php if ($fetch_profile['address'] == '') {
                                                                      echo 'disabled';

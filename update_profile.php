@@ -9,39 +9,47 @@ if (isset($_SESSION['user_id'])) {
 } else {
    $user_id = '';
    header('location:home.php');
-};
+}
 
 if (isset($_POST['submit'])) {
 
    $name = $_POST['name'];
    $name = filter_var($name, FILTER_SANITIZE_STRING);
-
    $email = $_POST['email'];
    $email = filter_var($email, FILTER_SANITIZE_STRING);
    $number = $_POST['number'];
    $number = filter_var($number, FILTER_SANITIZE_STRING);
 
+   // Check if the username already exists
    if (!empty($name)) {
-      $update_name = $conn->prepare("UPDATE `users` SET name = ? WHERE id = ?");
-      $update_name->execute([$name, $user_id]);
+      $select_name = $conn->prepare("SELECT * FROM `users` WHERE name = ? AND id != ?");
+      $select_name->execute([$name, $user_id]);
+      if ($select_name->rowCount() > 0) {
+         $message[] = 'Username already taken!';
+      } else {
+         $update_name = $conn->prepare("UPDATE `users` SET name = ? WHERE id = ?");
+         $update_name->execute([$name, $user_id]);
+      }
    }
 
+   // Check if the email already exists
    if (!empty($email)) {
-      $select_email = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
-      $select_email->execute([$email]);
+      $select_email = $conn->prepare("SELECT * FROM `users` WHERE email = ? AND id != ?");
+      $select_email->execute([$email, $user_id]);
       if ($select_email->rowCount() > 0) {
-         $message[] = 'email already taken!';
+         $message[] = 'Email already taken!';
       } else {
          $update_email = $conn->prepare("UPDATE `users` SET email = ? WHERE id = ?");
          $update_email->execute([$email, $user_id]);
       }
    }
 
+   // Check if the number already exists
    if (!empty($number)) {
-      $select_number = $conn->prepare("SELECT * FROM `users` WHERE number = ?");
-      $select_number->execute([$number]);
+      $select_number = $conn->prepare("SELECT * FROM `users` WHERE number = ? AND id != ?");
+      $select_number->execute([$number, $user_id]);
       if ($select_number->rowCount() > 0) {
-         $message[] = 'number already taken!';
+         $message[] = 'Number already taken!';
       } else {
          $update_number = $conn->prepare("UPDATE `users` SET number = ? WHERE id = ?");
          $update_number->execute([$number, $user_id]);
@@ -55,24 +63,23 @@ if (isset($_POST['submit'])) {
    $prev_pass = $fetch_prev_pass['password'];
    $old_pass = sha1($_POST['old_pass']);
    $old_pass = filter_var($old_pass, FILTER_SANITIZE_STRING);
-   $new_pass = sha1($_POST['new_pass']);
-   $new_pass = filter_var($new_pass, FILTER_SANITIZE_STRING);
+   $new_pass = $_POST['new_pass'];
    $confirm_pass = sha1($_POST['confirm_pass']);
    $confirm_pass = filter_var($confirm_pass, FILTER_SANITIZE_STRING);
 
+   // Check if the old password is correct and the new password is at least 8 characters long
    if ($old_pass != $empty_pass) {
       if ($old_pass != $prev_pass) {
-         $message[] = 'old password not matched!';
-      } elseif ($new_pass != $confirm_pass) {
-         $message[] = 'confirm password not matched!';
+         $message[] = 'Old password not matched!';
+      } elseif ($new_pass != $_POST['confirm_pass']) {
+         $message[] = 'Confirm password not matched!';
+      } elseif (strlen($new_pass) < 8) {
+         $message[] = 'New password must be at least 8 characters long!';
       } else {
-         if ($new_pass != $empty_pass) {
-            $update_pass = $conn->prepare("UPDATE `users` SET password = ? WHERE id = ?");
-            $update_pass->execute([$confirm_pass, $user_id]);
-            $message[] = 'password updated successfully!';
-         } else {
-            $message[] = 'please enter a new password!';
-         }
+         $new_pass = sha1($new_pass); // Hash the new password
+         $update_pass = $conn->prepare("UPDATE `users` SET password = ? WHERE id = ?");
+         $update_pass->execute([$new_pass, $user_id]);
+         $message[] = 'Password updated successfully!';
       }
    }
 }
@@ -86,7 +93,7 @@ if (isset($_POST['submit'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>update profile</title>
+   <title>Update Profile</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -105,22 +112,19 @@ if (isset($_POST['submit'])) {
    <section class="form-container update-form">
 
       <form action="" method="post">
-         <h3>update profile</h3>
+         <h3>Update Profile</h3>
          <input type="text" name="name" placeholder="<?= $fetch_profile['name']; ?>" class="box" maxlength="50">
          <input type="email" name="email" placeholder="<?= $fetch_profile['email']; ?>" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
-         <input type="number" name="number" placeholder="<?= $fetch_profile['number']; ?>"" class=" box" min="0" max="9999999999" maxlength="10">
-         <input type="password" name="old_pass" placeholder="enter your old password" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
-         <input type="password" name="new_pass" placeholder="enter your new password" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
-         <input type="password" name="confirm_pass" placeholder="confirm your new password" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
-         <input type="submit" value="update now" name="submit" class="btn">
+         <input type="number" name="number" placeholder="<?= $fetch_profile['number']; ?>" class="box" min="0" max="9999999999" maxlength="10">
+         <input type="password" name="old_pass" placeholder="Enter your old password" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="password" name="new_pass" placeholder="Enter your new password (min 8 characters)" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="password" name="confirm_pass" placeholder="Confirm your new password" class="box" maxlength="50" oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="submit" value="Update Now" name="submit" class="btn">
       </form>
 
    </section>
 
-
-
    <?php include 'components/footer.php'; ?>
-
 
    <!-- custom js file link  -->
    <script src="js/script.js"></script>

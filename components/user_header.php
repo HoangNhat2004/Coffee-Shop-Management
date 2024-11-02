@@ -59,7 +59,7 @@ if (isset($message)) {
          <?php
          } else {
          ?>
-            <p class="name">please login first!</p>
+            <p class="name">Please login first!</p>
             <a href="login.php" class="btn">login</a>
          <?php
          }

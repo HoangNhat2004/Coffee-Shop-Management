@@ -48,7 +48,7 @@
                <div class="content">
                   <span>Order online</span>
                   <h3>Turmeric Spiced Coffee</h3>
-                  <a href="menu.php" class="btn">see menus</a>
+                  <a href="menu.php" class="btn">see menu</a>
                </div>
                <div class="image">
                   <img src="images/home-img-1.1.png" alt="">
@@ -59,8 +59,7 @@
                <div class="content">
                   <span>Order online</span>
                   <h3>delicious pizza</h3>
-                  <a href="menu.php" class="btn">see menus</a>
-                  <a href="menu.php" class="btn">see menus</a>
+                  <a href="menu.php" class="btn">see menu</a>
                </div>
                <div class="image">
                   <img src="images/home-img-1.png" alt="">
@@ -71,8 +70,7 @@
                <div class="content">
                   <span>Order online</span>
                   <h3>chezzy hamburger</h3>
-                  <a href="menu.php" class="btn">see menus</a>
-                  <a href="menu.php" class="btn">see menus</a>
+                  <a href="menu.php" class="btn">see menu</a>
                </div>
                <div class="image">
                   <img src="images/home-img-2.png" alt="">
@@ -83,8 +81,7 @@
                <div class="content">
                   <span>Order online</span>
                   <h3>rosted chicken</h3>
-                  <a href="menu.php" class="btn">see menus</a>
-                  <a href="menu.php" class="btn">see menus</a>
+                  <a href="menu.php" class="btn">see menu</a>
                </div>
                <div class="image">
                   <img src="images/home-img-3.png" alt="">

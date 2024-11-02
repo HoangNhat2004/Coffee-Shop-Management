@@ -902,7 +902,11 @@ section {
 }
 
 .checkout form .cart-items p .price {
-   color: var(--yellow);
+   color: var(--white);
+}
+.checkout form .cart-items p .price ::selection {
+   background-color: #fff;
+   color: black;
 }
 
 .checkout form .cart-items .grand-total {

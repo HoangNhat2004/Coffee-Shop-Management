@@ -684,10 +684,19 @@ section {
    margin: auto;
 }
 
-.team .swiper-wrapper{
-   justify-content: center;
+
+
+@media (max-width: 1400px){
+   .team .swiper-wrapper{
+      justify-content: center;
+   }
 }
 
+@media (max-width: 1300px){
+   .team .swiper-wrapper{
+      justify-content: center;
+   }
+}
 
 .team .box {
    margin-bottom: 4rem;

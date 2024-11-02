@@ -21,7 +21,7 @@ include 'components/add_cart.php';
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>menu</title>
+   <title>Menu</title>
 
    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 
@@ -41,7 +41,7 @@ include 'components/add_cart.php';
 
    <div class="heading">
       <h3>our menu</h3>
-      <p><a href="home.php">home</a> <span> / menu</span></p>
+      <p><a href="home.php">Home</a> <span> / Menu</span></p>
    </div>
 
    <!-- menu section starts  -->

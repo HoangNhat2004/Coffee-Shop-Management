@@ -354,8 +354,6 @@ section {
 
 .hero {
    width: 100%;
-   margin-bottom: 100px;
-
 }
 
 .hero .slide {
@@ -682,10 +680,12 @@ section {
 .team {
    position: relative;
    width: 100%;
-   margin-right: 14%;
    margin-top: 30px;
+   margin: auto;
+}
+
+.team .swiper-wrapper{
    justify-content: center;
-   align-items: center;
 }
 
 
@@ -702,14 +702,8 @@ section {
    border-radius: 10%;
 }
 
-.team h1 {
-   padding-left: 200px;
-   margin-bottom: 60px;
-}
-
 .team .box h2 {
    padding: 1rem 0;
-
    font-size: 2rem;
 }
 

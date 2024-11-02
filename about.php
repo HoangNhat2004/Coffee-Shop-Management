@@ -69,8 +69,7 @@
 
       <h1 class="title">Our Team</h1>
 
-      <div class="swiper-wrapper" style="padding-left: 210px;">
-
+      <div class="swiper-wrapper">
          <div class="box">
             <img src="images/kai.jpg" alt="">
 
@@ -90,7 +89,6 @@
             <h3>StudentID: 522H0169</h3>
          </div>
       </div>
-
    </section>
 
    <!-- about section starts  -->

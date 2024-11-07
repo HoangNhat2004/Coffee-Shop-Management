@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
       $_SESSION['admin_id'] = $fetch_admin_id['id'];
       header('location:dashboard.php');
    } else {
-      $message[] = 'incorrect username or password!';
+      $message[] = 'Incorrect username or password!';
    }
 }
 
@@ -71,7 +71,6 @@ if (isset($_POST['submit'])) {
          </ul>
          <label for="name"></label>
          <input type="submit" value="login now" name="submit" class="button">
-         <a href="register_admin.php" class="redireact-register">Sign up</a>
       </form>
 
    </section>

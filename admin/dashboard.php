@@ -81,7 +81,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         <span class="icon">
                             <ion-icon name="receipt-outline"></ion-icon>
                         </span>
-                        <span class="title">orders</span>
+                        <span class="title">Orders</span>
                     </a>
                 </li>
 
@@ -90,7 +90,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         <span class="icon">
                             <ion-icon name="accessibility-outline"></ion-icon>
                         </span>
-                        <span class="title">admins</span>
+                        <span class="title">Admins</span>
                     </a>
                 </li>
 
@@ -99,7 +99,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
-                        <span class="title">employees</span>
+                        <span class="title">Employees</span>
                     </a>
                 </li>
 
@@ -108,7 +108,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         <span class="icon">
                             <ion-icon name="people-circle-outline"></ion-icon>
                         </span>
-                        <span class="title">users</span>
+                        <span class="title">Users</span>
                     </a>
                 </li>
 
@@ -117,7 +117,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         <span class="icon">
                             <ion-icon name="chatbubble-outline"></ion-icon>
                         </span>
-                        <span class="title">messages</span>
+                        <span class="title">Messages</span>
                     </a>
                 </li>
 

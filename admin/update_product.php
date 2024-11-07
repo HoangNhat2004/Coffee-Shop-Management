@@ -24,7 +24,7 @@ if (isset($_POST['update'])) {
    $update_product = $conn->prepare("UPDATE `products` SET name = ?, category = ?, price = ? WHERE id = ?");
    $update_product->execute([$name, $category, $price, $pid]);
 
-   $message[] = 'product updated!';
+   $message[] = 'Product updated!';
 
    $old_image = $_POST['old_image'];
    $image = $_FILES['image']['name'];
@@ -35,13 +35,13 @@ if (isset($_POST['update'])) {
 
    if (!empty($image)) {
       if ($image_size > 2000000) {
-         $message[] = 'images size is too large!';
+         $message[] = 'Images size is too large!';
       } else {
          $update_image = $conn->prepare("UPDATE `products` SET image = ? WHERE id = ?");
          $update_image->execute([$image, $pid]);
          move_uploaded_file($image_tmp_name, $image_folder);
          unlink('../uploaded_img/' . $old_image);
-         $message[] = 'image updated!';
+         $message[] = 'Image updated!';
       }
    }
 }
@@ -55,7 +55,7 @@ if (isset($_POST['update'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>update product</title>
+   <title>Update product</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -86,19 +86,19 @@ if (isset($_POST['update'])) {
                <input type="hidden" name="pid" value="<?= $fetch_products['id']; ?>">
                <input type="hidden" name="old_image" value="<?= $fetch_products['image']; ?>">
                <img src="../uploaded_img/<?= $fetch_products['image']; ?>" alt="">
-               <span>update name</span>
+               <span>Update name</span>
                <input type="text" required placeholder="enter product name" name="name" maxlength="100" class="box" value="<?= $fetch_products['name']; ?>">
-               <span>update price</span>
+               <span>Update price</span>
                <input type="number" min="0" max="9999999999" required placeholder="enter product price" name="price" onkeypress="if(this.value.length == 10) return false;" class="box" value="<?= $fetch_products['price']; ?>">
-               <span>update category</span>
+               <span>Update category</span>
                <select name="category" class="box" required>
                   <option selected value="<?= $fetch_products['category']; ?>"><?= $fetch_products['category']; ?></option>
-                  <option value="main dish">main dish</option>
-                  <option value="fast food">fast food</option>
-                  <option value="drinks">drinks</option>
-                  <option value="desserts">desserts</option>
+                  <option value="main dish">Main dish</option>
+                  <option value="fast food">Fast food</option>
+                  <option value="drinks">Drinks</option>
+                  <option value="desserts">Desserts</option>
                </select>
-               <span>update image</span>
+               <span>Update image</span>
                <input type="file" name="image" class="box" accept="image/jpg, image/jpeg, image/png, image/webp">
                <div class="flex-btn">
                   <input type="submit" value="update" class="btn" name="update">

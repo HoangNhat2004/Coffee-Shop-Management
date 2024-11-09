@@ -11,6 +11,11 @@ if (isset($_SESSION['user_id'])) {
    header('location:home.php');
 }
 
+// Fetch the current profile data
+$select_profile = $conn->prepare("SELECT * FROM `users` WHERE id = ?");
+$select_profile->execute([$user_id]);
+$fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
+
 if (isset($_POST['submit'])) {
 
    $name = $_POST['name'];
@@ -20,66 +25,81 @@ if (isset($_POST['submit'])) {
    $number = $_POST['number'];
    $number = filter_var($number, FILTER_SANITIZE_STRING);
 
-   // Check if the username already exists
-   if (!empty($name)) {
-      $select_name = $conn->prepare("SELECT * FROM `users` WHERE name = ? AND id != ?");
-      $select_name->execute([$name, $user_id]);
-      if ($select_name->rowCount() > 0) {
-         $message[] = 'Username already taken!';
-      } else {
-         $update_name = $conn->prepare("UPDATE `users` SET name = ? WHERE id = ?");
-         $update_name->execute([$name, $user_id]);
-      }
-   }
+   $update_allowed = true;
+   $changes_made = false;
 
-   // Check if the email already exists
-   if (!empty($email)) {
-      $select_email = $conn->prepare("SELECT * FROM `users` WHERE email = ? AND id != ?");
-      $select_email->execute([$email, $user_id]);
-      if ($select_email->rowCount() > 0) {
-         $message[] = 'Email already taken!';
-      } else {
-         $update_email = $conn->prepare("UPDATE `users` SET email = ? WHERE id = ?");
-         $update_email->execute([$email, $user_id]);
-      }
-   }
-
-   // Check if the number already exists
-   if (!empty($number)) {
-      $select_number = $conn->prepare("SELECT * FROM `users` WHERE number = ? AND id != ?");
-      $select_number->execute([$number, $user_id]);
-      if ($select_number->rowCount() > 0) {
-         $message[] = 'Number already taken!';
-      } else {
-         $update_number = $conn->prepare("UPDATE `users` SET number = ? WHERE id = ?");
-         $update_number->execute([$number, $user_id]);
-      }
-   }
-
-   $empty_pass = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
-   $select_prev_pass = $conn->prepare("SELECT password FROM `users` WHERE id = ?");
-   $select_prev_pass->execute([$user_id]);
-   $fetch_prev_pass = $select_prev_pass->fetch(PDO::FETCH_ASSOC);
-   $prev_pass = $fetch_prev_pass['password'];
+   // Password validation block
+   $prev_pass = $fetch_profile['password'];
    $old_pass = sha1($_POST['old_pass']);
    $old_pass = filter_var($old_pass, FILTER_SANITIZE_STRING);
    $new_pass = $_POST['new_pass'];
    $confirm_pass = sha1($_POST['confirm_pass']);
    $confirm_pass = filter_var($confirm_pass, FILTER_SANITIZE_STRING);
 
-   // Check if the old password is correct and the new password is at least 8 characters long
-   if ($old_pass != $empty_pass) {
+   if (!empty($new_pass)) {
       if ($old_pass != $prev_pass) {
          $message[] = 'Old password not matched!';
+         $update_allowed = false;
       } elseif ($new_pass != $_POST['confirm_pass']) {
          $message[] = 'Confirm password not matched!';
+         $update_allowed = false;
       } elseif (strlen($new_pass) < 8) {
          $message[] = 'New password must be at least 8 characters long!';
+         $update_allowed = false;
       } else {
-         $new_pass = sha1($new_pass); // Hash the new password
+         $new_pass = sha1($new_pass);
          $update_pass = $conn->prepare("UPDATE `users` SET password = ? WHERE id = ?");
          $update_pass->execute([$new_pass, $user_id]);
          $message[] = 'Password updated successfully!';
+         $changes_made = true;
+      }
+   }
+
+   if ($update_allowed) {
+      // Username validation and update
+      if (!empty($name) && $name != $fetch_profile['name']) {
+         $select_name = $conn->prepare("SELECT * FROM `users` WHERE name = ? AND id != ?");
+         $select_name->execute([$name, $user_id]);
+         if ($select_name->rowCount() > 0) {
+            $message[] = 'Username already taken! Please choose a different one.';
+            $update_allowed = false;
+         } else {
+            $update_name = $conn->prepare("UPDATE `users` SET name = ? WHERE id = ?");
+            $update_name->execute([$name, $user_id]);
+            $changes_made = true;
+         }
+      }
+
+      // Email validation and update
+      if (!empty($email) && $email != $fetch_profile['email']) {
+         $select_email = $conn->prepare("SELECT * FROM `users` WHERE email = ? AND id != ?");
+         $select_email->execute([$email, $user_id]);
+         if ($select_email->rowCount() > 0) {
+            $message[] = 'Email already taken!';
+            $update_allowed = false;
+         } else {
+            $update_email = $conn->prepare("UPDATE `users` SET email = ? WHERE id = ?");
+            $update_email->execute([$email, $user_id]);
+            $changes_made = true;
+         }
+      }
+
+      // Number validation and update
+      if (!empty($number) && $number != $fetch_profile['number']) {
+         $select_number = $conn->prepare("SELECT * FROM `users` WHERE number = ? AND id != ?");
+         $select_number->execute([$number, $user_id]);
+         if ($select_number->rowCount() > 0) {
+            $message[] = 'Number already taken!';
+            $update_allowed = false;
+         } else {
+            $update_number = $conn->prepare("UPDATE `users` SET number = ? WHERE id = ?");
+            $update_number->execute([$number, $user_id]);
+            $changes_made = true;
+         }
+      }
+
+      if (!$changes_made && $update_allowed) {
+         $message[] = 'No changes were made.';
       }
    }
 }

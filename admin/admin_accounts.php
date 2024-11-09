@@ -26,7 +26,7 @@ if (isset($_GET['delete'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>admins accounts</title>
+   <title>Admins accounts</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
@@ -49,8 +49,8 @@ if (isset($_GET['delete'])) {
       <div class="table_header">
          <p>Admin Details</p>
          <div>
-            <input placeholder="admin name">
-            <button class="add_new">search</button>
+            <input placeholder="Admin name">
+            <button class="add_new">Search</button>
             <a href="register_admin.php"><button class="add_new">Add Admin</button></a>
          </div>
       </div>
@@ -75,7 +75,7 @@ if (isset($_GET['delete'])) {
                      <tr>
                         <td><span><?= $fetch_accounts['id']; ?></span></td>
                         <td><span><?= $fetch_accounts['name']; ?></span></td>
-                        <td><a href="admin_accounts.php?delete=<?= $fetch_accounts['id']; ?>" onclick="return confirm('delete this account?');"><button><i class="fa-solid fa-trash"></i></button></a></td>
+                        <td><a href="admin_accounts.php?delete=<?= $fetch_accounts['id']; ?>" onclick="return confirm('Delete this account?');"><button><i class="fa-solid fa-trash"></i></button></a></td>
                      </tr>
                <?php
                   }

@@ -25,14 +25,14 @@ if (isset($_POST['submit'])) {
    $select_employee->execute([$name]);
 
    if ($select_employee->rowCount() > 0) {
-      $message[] = 'username already exists!';
+      $message[] = 'Username already exists!';
    } else {
       if ($pass != $cpass) {
-         $message[] = 'confirm passowrd not matched!';
+         $message[] = 'Confirm passowrd not matched!';
       } else {
          $insert_employee = $conn->prepare("INSERT INTO `employee`(name, age, password) VALUES(?,?,?)");
          $insert_employee->execute([$name, $age, $cpass]);
-         $message[] = 'new employee registered!';
+         $message[] = 'New employee registered!';
       }
    }
 }
@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>register</title>
+   <title>Register</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -66,10 +66,10 @@ if (isset($_POST['submit'])) {
 
       <form action="" method="POST">
          <h3>register new</h3>
-         <input type="text" name="name" maxlength="20" required placeholder="enter your username" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-         <input type="age" name="age" maxlength="2" required placeholder="enter your age" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-         <input type="password" name="pass" maxlength="20" required placeholder="enter your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-         <input type="password" name="cpass" maxlength="20" required placeholder="confirm your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="text" name="name" maxlength="20" required placeholder="Enter your username" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="age" name="age" maxlength="2" required placeholder="Enter your age" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="password" name="pass" maxlength="20" required placeholder="Enter your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+         <input type="password" name="cpass" maxlength="20" required placeholder="Confirm your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
          <input type="submit" value="register now" name="submit" class="btn">
       </form>
 

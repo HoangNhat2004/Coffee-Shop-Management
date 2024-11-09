@@ -122,7 +122,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                 </li>
 
                 <li>
-                    <a href="../components/admin_logout.php" onclick="return confirm('logout from this website?');" class="delete-btn"><span class="icon">
+                    <a href="../components/admin_logout.php" onclick="return confirm('Logout from this website?');" class="delete-btn"><span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>
                         <span class="title">Sign Out</span></a>
@@ -167,7 +167,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         ?>
                         <div>
                             <div class="numbers"><span>$</span><?= $total_pendings; ?><span>/-</span></div>
-                            <div class="cardName">total pendings</div>
+                            <div class="cardName">Total pendings</div>
                         </div>
 
                         <div class="iconBx">
@@ -188,7 +188,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         ?>
                         <div>
                             <div class="numbers"><span>$</span><?= $total_completes; ?><span>/-</span></div>
-                            <div class="cardName">total completes</div>
+                            <div class="cardName">Total completes</div>
                         </div>
 
                         <div class="iconBx">
@@ -206,7 +206,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         ?>
                         <div>
                             <div class="numbers"><span>$</span><?= $total_completes + $total_pendings; ?><span>/-</span></div>
-                            <div class="cardName">total orders</div>
+                            <div class="cardName">Total orders</div>
                         </div>
 
                         <div class="iconBx">
@@ -224,7 +224,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         ?>
                         <div>
                             <div class="numbers"><?= $numbers_of_products; ?></div>
-                            <div class="cardName">products added</div>
+                            <div class="cardName">Products added</div>
                         </div>
 
                         <div class="iconBx">
@@ -242,7 +242,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         ?>
                         <div>
                             <div class="numbers"><?= $numbers_of_products; ?></div>
-                            <div class="cardName">users accounts</div>
+                            <div class="cardName">Users accounts</div>
                         </div>
 
                         <div class="iconBx">
@@ -260,7 +260,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         ?>
                         <div>
                             <div class="numbers"><?= $numbers_of_admins; ?></div>
-                            <div class="cardName">admin accounts</div>
+                            <div class="cardName">Admin accounts</div>
                         </div>
 
                         <div class="iconBx">
@@ -278,7 +278,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         ?>
                         <div>
                             <div class="numbers"><?= $numbers_of_admins; ?></div>
-                            <div class="cardName">employees accounts</div>
+                            <div class="cardName">Employees accounts</div>
                         </div>
 
                         <div class="iconBx">
@@ -296,7 +296,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         ?>
                         <div>
                             <div class="numbers"><?= $numbers_of_messages; ?></div>
-                            <div class="cardName">new messages</div>
+                            <div class="cardName">New messages</div>
                         </div>
 
                         <div class="iconBx">

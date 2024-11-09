@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
       $_SESSION['employee_id'] = $fetch_employee_id['id'];
       header('location:employee_dashboard.php');
    } else {
-      $message[] = 'incorrect username or password!';
+      $message[] = 'Incorrect username or password!';
    }
 }
 
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
    <section class="box">
 
       <form action="" method="POST">
-         <h1>Employee logIn</h1>
+         <h1>Employee login</h1>
          <ul>
             <li><label for="name">User name</label></li>
             <li><input type="text" name="name" maxlength="20" required placeholder="" oninput="this.value = this.value.replace(/\s/g, '')"></li>
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
             <li><input type="password" name="pass" maxlength="20" required placeholder="" oninput="this.value = this.value.replace(/\s/g, '')"></li>
          </ul>
          <label for="name"></label>
-         <input type="submit" value="login now" name="submit" class="button">
+         <input type="submit" value="Login now" name="submit" class="button">
       </form>
 
    </section>

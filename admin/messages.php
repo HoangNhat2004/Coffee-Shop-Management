@@ -26,7 +26,7 @@ if (isset($_GET['delete'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>messages</title>
+   <title>Messages</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -50,8 +50,8 @@ if (isset($_GET['delete'])) {
       <div class="table_header">
          <p>Message Details</p>
          <div>
-            <input placeholder="customer name">
-            <button class="add_new">search</button>
+            <input placeholder="Customer name">
+            <button class="add_new">Search</button>
          </div>
       </div>
 
@@ -62,8 +62,8 @@ if (isset($_GET['delete'])) {
                <tr>
                   <th>Name</th>
                   <th>Number</th>
-                  <th>email</th>
-                  <th>messahe</th>
+                  <th>Email</th>
+                  <th>Message</th>
                   <th>Action</th>
                </tr>
             </thead>
@@ -79,7 +79,7 @@ if (isset($_GET['delete'])) {
                         <td><span><?= $fetch_messages['number']; ?></span></td>
                         <td><span><?= $fetch_messages['email']; ?></span></td>
                         <td><span><?= $fetch_messages['message']; ?></span></td>
-                        <td><a href="messages.php?delete=<?= $fetch_messages['id']; ?>" onclick="return confirm('delete this message?');"><button><i class="fa-solid fa-trash"></i></button></a></td>
+                        <td><a href="messages.php?delete=<?= $fetch_messages['id']; ?>" onclick="return confirm('Delete this message?');"><button><i class="fa-solid fa-trash"></i></button></a></td>
                      </tr>
                <?php
                   }

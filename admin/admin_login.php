@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
             <li><input type="password" name="pass" maxlength="20" required placeholder="" oninput="this.value = this.value.replace(/\s/g, '')"></li>
          </ul>
          <label for="name"></label>
-         <input type="submit" value="login now" name="submit" class="button">
+         <input type="submit" value="Login now" name="submit" class="button">
       </form>
 
    </section>

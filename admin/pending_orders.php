@@ -35,7 +35,7 @@ if (isset($_GET['delete'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>placed orders</title>
+   <title>Placed orders</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -60,8 +60,8 @@ if (isset($_GET['delete'])) {
       <div class="table_header">
          <p>Order Details</p>
          <div>
-            <input placeholder="order number">
-            <button class="add_new">search</button>
+            <input placeholder="Order number">
+            <button class="add_new">Search</button>
          </div>
       </div>
 
@@ -75,7 +75,7 @@ if (isset($_GET['delete'])) {
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Address</th>
-                  <th>products</th>
+                  <th>Products</th>
                   <th>Price</th>
                   <th>PaymentType</th>
                   <th>Action</th>
@@ -103,8 +103,8 @@ if (isset($_GET['delete'])) {
                               <input type="hidden" name="order_id" value="<?= $fetch_orders['id']; ?>">
                               <select name="payment_status" class="drop-down">
                                  <option value="" selected disabled><?= $fetch_orders['payment_status']; ?></option>
-                                 <option value="pending">pending</option>
-                                 <option value="completed">completed</option>
+                                 <option value="pending">Pending</option>
+                                 <option value="completed">Completed</option>
                               </select>
                               <div class="flex-btn">
                                  <input type="submit" value="update" class="btn" name="update_payment">

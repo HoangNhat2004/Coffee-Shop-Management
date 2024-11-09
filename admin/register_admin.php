@@ -4,13 +4,20 @@ include '../components/connect.php';
 
 session_start();
 
+$admin_id = $_SESSION['admin_id'];
+
+if (!isset($admin_id)) {
+   header('location:admin_login.php');
+}
+
 if (isset($_POST['submit'])) {
 
    $name = $_POST['name'];
    $name = filter_var($name, FILTER_SANITIZE_STRING);
-   $pass = $_POST['pass'];
+   $pass = sha1($_POST['pass']);
+   $pass_plain = $_POST['pass']; // Store plain password for length check
    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
-   $cpass = $_POST['cpass'];
+   $cpass = sha1($_POST['cpass']);
    $cpass = filter_var($cpass, FILTER_SANITIZE_STRING);
 
    $select_admin = $conn->prepare("SELECT * FROM `admin` WHERE name = ?");
@@ -18,19 +25,19 @@ if (isset($_POST['submit'])) {
 
    if ($select_admin->rowCount() > 0) {
       $message[] = 'Username already exists!';
+   } elseif (strlen($pass_plain) < 8) {
+      $message[] = 'Password must be at least 8 characters long!';
    } else {
-      if (strlen($pass) < 8) {
-         $message[] = 'Password must be at least 8 characters!';
-      } elseif ($pass != $cpass) {
+      if ($pass != $cpass) {
          $message[] = 'Confirm password does not match!';
       } else {
-         $hashed_pass = sha1($pass);
          $insert_admin = $conn->prepare("INSERT INTO `admin`(name, password) VALUES(?,?)");
-         $insert_admin->execute([$name, $hashed_pass]);
+         $insert_admin->execute([$name, $cpass]);
          $message[] = 'New admin registered!';
       }
    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -59,11 +66,11 @@ if (isset($_POST['submit'])) {
    <section class="form-container">
 
       <form action="" method="POST">
-         <h3>register new</h3>
+         <h3>Register New</h3>
          <input type="text" name="name" maxlength="20" required placeholder="Enter your username" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
          <input type="password" name="pass" maxlength="20" required placeholder="Enter your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
          <input type="password" name="cpass" maxlength="20" required placeholder="Confirm your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-         <input type="submit" value="register now" name="submit" class="btn">
+         <input type="submit" value="Register Now" name="submit" class="btn">
       </form>
 
    </section>

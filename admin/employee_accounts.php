@@ -87,7 +87,7 @@ if (isset($_GET['delete'])) {
                         <td><span><?= $fetch_accounts['email']; ?></span></td>
                         <td><span><?= $fetch_accounts['address']; ?></span></td>
                         <td>
-                           <a href="employee_accounts.php?update=<?= $fetch_products['id']; ?>"><button><i class="fa-solid fa-pen-to-square"></i></button></a>
+                           <a href="update_employee_profile.php?id=<?= $fetch_accounts['id']; ?>"><button><i class="fa-solid fa-pen-to-square"></i></button></a>
                            <a href="employee_accounts.php?delete=<?= $fetch_accounts['id']; ?>" onclick="return confirm('Delete this account?');"><button><i class="fa-solid fa-trash"></i></button></a>
                         </td>
                      </tr>

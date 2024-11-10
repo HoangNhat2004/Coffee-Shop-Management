@@ -106,12 +106,12 @@ $grand_total = 0;
 
       <div class="cart-total">
          <p>Cart total : <span>$<?= $grand_total; ?></span></p>
-         <a href="checkout.php" class="btn <?= ($grand_total > 1) ? '' : 'disabled'; ?>">proceed to checkout</a>
+         <a href="checkout.php" class="btn <?= ($grand_total >= 1) ? '' : 'disabled'; ?>">proceed to checkout</a>
       </div>
 
       <div class="more-btn">
          <form action="" method="post">
-            <button type="submit" class="delete-btn <?= ($grand_total > 1) ? '' : 'disabled'; ?>" name="delete_all" onclick="return confirm('Delete all from cart?');">delete all</button>
+            <button type="submit" class="delete-btn <?= ($grand_total >= 1) ? '' : 'disabled'; ?>" name="delete_all" onclick="return confirm('Delete all from cart?');">delete all</button>
          </form>
          <a href="menu.php" class="btn">continue shopping</a>
       </div>

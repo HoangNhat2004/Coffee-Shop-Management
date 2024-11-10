@@ -19,7 +19,7 @@ if (!isset($employee_id)) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>employee dashboard</title>
+   <title>Employee dashboard</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -45,7 +45,7 @@ if (!isset($employee_id)) {
             <div class="box-container">
 
                <div class="box">
-                  <h3>welcome!</h3>
+                  <h3>Welcome!</h3>
                   <p><?= $fetch_profile['name']; ?></p>
 
                </div>
@@ -63,7 +63,7 @@ if (!isset($employee_id)) {
                ?>
                <div>
                   <div class="numbers"><?= $numbers_of_orders; ?></div>
-                  <div class="cardName">total orders</div>
+                  <div class="cardName">Total orders</div>
                </div>
 
                <div class="iconBx">
@@ -84,7 +84,7 @@ if (!isset($employee_id)) {
                ?>
                <div>
                   <div class="numbers"><span>$</span><?= $total_pendings; ?><span>/-</span></div>
-                  <div class="cardName">total pendings</div>
+                  <div class="cardName">Total pendings</div>
                </div>
 
                <div class="iconBx">
@@ -105,7 +105,7 @@ if (!isset($employee_id)) {
                ?>
                <div>
                   <div class="numbers"><span>$</span><?= $total_completes; ?><span>/-</span></div>
-                  <div class="cardName">total completes</div>
+                  <div class="cardName">Total completes</div>
                </div>
 
                <div class="iconBx">
@@ -123,7 +123,7 @@ if (!isset($employee_id)) {
                ?>
                <div>
                   <div class="numbers"><span>$</span><?= $total_completes + $total_pendings; ?><span>/-</span></div>
-                  <div class="cardName">total orders</div>
+                  <div class="cardName">Total orders</div>
                </div>
 
                <div class="iconBx">
@@ -141,7 +141,7 @@ if (!isset($employee_id)) {
                ?>
                <div>
                   <div class="numbers"><?= $numbers_of_products; ?></div>
-                  <div class="cardName">products added</div>
+                  <div class="cardName">Products added</div>
                </div>
 
                <div class="iconBx">

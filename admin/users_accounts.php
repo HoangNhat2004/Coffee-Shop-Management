@@ -21,6 +21,13 @@ if (isset($_GET['delete'])) {
    header('location:users_accounts.php');
 }
 
+// Lọc theo tên khách hàng nếu có tìm kiếm
+if (isset($_POST['search_customer'])) {
+   $customer_name = $_POST['customer_name'];
+} else {
+   $customer_name = '';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -54,12 +61,14 @@ if (isset($_GET['delete'])) {
       <div class="table_header">
          <p>User Details</p>
          <div>
-            <input placeholder="Customer name">
-            <button class="add_new">Search</button>
+            <!-- Form tìm kiếm theo tên khách hàng -->
+            <form method="post">
+               <input type="text" name="customer_name" placeholder="Customer name" value="<?= htmlspecialchars($customer_name); ?>">
+               <button type="submit" name="search_customer" class="add_new">Search</button>
+            </form>
          </div>
       </div>
 
-      </div>
       <div>
          <table class="table">
             <thead>
@@ -73,16 +82,23 @@ if (isset($_GET['delete'])) {
             </thead>
             <tbody>
                <?php
-               $select_account = $conn->prepare("SELECT * FROM `users`");
-               $select_account->execute();
+               // Truy vấn tìm kiếm theo tên khách hàng nếu có
+               if ($customer_name != '') {
+                  $select_account = $conn->prepare("SELECT * FROM `users` WHERE name LIKE ?");
+                  $select_account->execute(["%{$customer_name}%"]);
+               } else {
+                  $select_account = $conn->prepare("SELECT * FROM `users`");
+                  $select_account->execute();
+               }
+
                if ($select_account->rowCount() > 0) {
                   while ($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)) {
                ?>
                      <tr>
                         <td><span><?= $fetch_accounts['id']; ?></span></td>
-                        <td><span><?= $fetch_accounts['name']; ?></td>
-                        <td><span><?= $fetch_accounts['email']; ?></td>
-                        <td><span><?= $fetch_accounts['address']; ?></td>
+                        <td><span><?= $fetch_accounts['name']; ?></span></td>
+                        <td><span><?= $fetch_accounts['email']; ?></span></td>
+                        <td><span><?= $fetch_accounts['address']; ?></span></td>
                         <td><a href="users_accounts.php?delete=<?= $fetch_accounts['id']; ?>" onclick="return confirm('Delete this account?');"><button><i class="fa-solid fa-trash"></i></button></a></td>
                      </tr>
                <?php

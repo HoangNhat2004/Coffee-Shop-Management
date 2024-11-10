@@ -54,8 +54,8 @@ include 'components/add_cart.php';
       <?php
          if(isset($_POST['search_box']) OR isset($_POST['search_btn'])){
          $search_box = $_POST['search_box'];
-         $select_products = $conn->prepare("SELECT * FROM `products` WHERE name LIKE '%{$search_box}%'");
-         $select_products->execute();
+         $select_products = $conn->prepare("SELECT * FROM `products` WHERE name LIKE :search OR category LIKE :search");
+         $select_products->execute(['search' => "%{$search_box}%"]);
          if($select_products->rowCount() > 0){
             while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){
       ?>
@@ -86,25 +86,9 @@ include 'components/add_cart.php';
 
 </section>
 
-
-
-
-
-
-
-
-
-
-
 <!-- footer section starts  -->
 <?php include 'components/footer.php'; ?>
 <!-- footer section ends -->
-
-
-
-
-
-
 
 <!-- custom js file link  -->
 <script src="js/script.js"></script>

@@ -16,6 +16,14 @@ if (isset($_GET['delete'])) {
    $delete_employees->execute([$delete_id]);
    header('location:employee_accounts.php');
 }
+
+// Lọc theo tên nhân viên nếu có tìm kiếm
+if (isset($_POST['search_employee'])) {
+   $employee_name = $_POST['employee_name'];
+} else {
+   $employee_name = '';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -27,8 +35,10 @@ if (isset($_GET['delete'])) {
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Employees accounts</title>
 
+   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
+   <!-- custom css file link  -->
    <link rel="stylesheet" href="../css/dashboard_style.css">
    <link rel="stylesheet" href="../css/table.css">
 
@@ -39,21 +49,18 @@ if (isset($_GET['delete'])) {
    <!-- employee accounts section starts  -->
    <section class="accounts">
       <h1 class="heading">Employees Management</h1>
-      <div class="box-container">
-
-         <!-- <div class="box">
-            <p>register new employee</p>
-            <a href="register_employee.php" class="option-btn">register</a>
-         </div> -->
-
-      </div>
 
       <div class="table_header">
          <p>Employee Details</p>
-         <div>
-            <input placeholder="Employee name">
-            <button class="add_new">Search</button>
-            <a href="register_employee.php"><button class="add_new">Add Employee</button></a>
+         <div style="display: flex; flex-direction: row;">
+            <!-- Form tìm kiếm theo tên nhân viên -->
+            <form method="post">
+               <input type="text" name="employee_name" placeholder="Employee name" value="<?= htmlspecialchars($employee_name); ?>">
+               <button type="submit" name="search_employee" class="add_new">Search</button>
+            </form>
+            <div style="padding: 0 5px;">
+               <a href="register_employee.php"><button class="add_new">Add Employee</button></a>
+            </div>
          </div>
       </div>
 
@@ -73,8 +80,15 @@ if (isset($_GET['delete'])) {
             </thead>
             <tbody>
                <?php
-               $select_account = $conn->prepare("SELECT * FROM `employee`");
-               $select_account->execute();
+               // Truy vấn tìm kiếm theo tên nhân viên nếu có
+               if ($employee_name != '') {
+                  $select_account = $conn->prepare("SELECT * FROM `employee` WHERE name LIKE ?");
+                  $select_account->execute(["%{$employee_name}%"]);
+               } else {
+                  $select_account = $conn->prepare("SELECT * FROM `employee`");
+                  $select_account->execute();
+               }
+
                if ($select_account->rowCount() > 0) {
                   while ($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)) {
                ?>
@@ -91,7 +105,6 @@ if (isset($_GET['delete'])) {
                            <a href="employee_accounts.php?delete=<?= $fetch_accounts['id']; ?>" onclick="return confirm('Delete this account?');"><button><i class="fa-solid fa-trash"></i></button></a>
                         </td>
                      </tr>
-
                <?php
                   }
                } else {
@@ -102,10 +115,7 @@ if (isset($_GET['delete'])) {
             </tbody>
          </table>
       </div>
-
-
    </section>
-
    <!-- employee accounts section ends -->
 
    <!-- custom js file link  -->

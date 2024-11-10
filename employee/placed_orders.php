@@ -8,15 +8,14 @@ $employee_id = $_SESSION['employee_id'];
 
 if (!isset($employee_id)) {
    header('location:employee_login.php');
-};
+}
 
 if (isset($_POST['update_payment'])) {
-
    $order_id = $_POST['order_id'];
    $payment_status = $_POST['payment_status'];
    $update_status = $conn->prepare("UPDATE `orders` SET payment_status = ? WHERE id = ?");
    $update_status->execute([$payment_status, $order_id]);
-   $message[] = 'payment status updated!';
+   $message[] = 'Payment status updated!';
 }
 
 if (isset($_GET['delete'])) {
@@ -25,6 +24,9 @@ if (isset($_GET['delete'])) {
    $delete_order->execute([$delete_id]);
    header('location:placed_orders.php');
 }
+
+// Kiểm tra nếu có tìm kiếm
+$search_order_id = isset($_POST['search_order_id']) ? $_POST['search_order_id'] : '';
 
 ?>
 
@@ -35,12 +37,10 @@ if (isset($_GET['delete'])) {
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>placed orders</title>
+   <title>Placed orders</title>
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
-   <!-- custom css file link  -->
    <link rel="stylesheet" href="../css/dashboard_style.css">
    <link rel="stylesheet" href="../css/table.css">
 
@@ -59,8 +59,10 @@ if (isset($_GET['delete'])) {
       <div class="table_header">
          <p>Order Details</p>
          <div>
-            <input placeholder="order number">
-            <button class="add_new">search</button>
+            <form method="post" action="">
+               <input type="text" name="search_order_id" placeholder="Order number" value="<?= htmlspecialchars($search_order_id); ?>">
+               <button type="submit" class="add_new">Search</button>
+            </form>
          </div>
       </div>
 
@@ -74,7 +76,7 @@ if (isset($_GET['delete'])) {
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Address</th>
-                  <th>products</th>
+                  <th>Products</th>
                   <th>Price</th>
                   <th>PaymentType</th>
                   <th>Action</th>
@@ -82,17 +84,27 @@ if (isset($_GET['delete'])) {
             </thead>
             <tbody>
                <?php
-               $select_orders = $conn->prepare("SELECT * FROM `orders`");
-               $select_orders->execute();
+               // Truy vấn SQL với điều kiện tìm kiếm
+               $query = "SELECT * FROM `orders` WHERE 1";
+               $params = [];
+
+               if ($search_order_id != '') {
+                  $query .= " AND id = ?";
+                  $params[] = $search_order_id;
+               }
+
+               $select_orders = $conn->prepare($query);
+               $select_orders->execute($params);
+
                if ($select_orders->rowCount() > 0) {
                   while ($fetch_orders = $select_orders->fetch(PDO::FETCH_ASSOC)) {
                ?>
                      <tr>
-                        <td><?= $fetch_orders['user_id']; ?></td>
+                        <td><?= $fetch_orders['id']; ?></td>
                         <td><?= $fetch_orders['placed_on']; ?></td>
                         <td><?= $fetch_orders['name']; ?></td>
                         <td><?= $fetch_orders['email']; ?></td>
-                        <td><?= $fetch_orders['number']; ?></span></td>
+                        <td><?= $fetch_orders['number']; ?></td>
                         <td><?= $fetch_orders['address']; ?></td>
                         <td><?= $fetch_orders['total_products']; ?></td>
                         <td><?= $fetch_orders['total_price']; ?></td>
@@ -102,12 +114,12 @@ if (isset($_GET['delete'])) {
                               <input type="hidden" name="order_id" value="<?= $fetch_orders['id']; ?>">
                               <select name="payment_status" class="drop-down">
                                  <option value="" selected disabled><?= $fetch_orders['payment_status']; ?></option>
-                                 <option value="pending">pending</option>
-                                 <option value="completed">completed</option>
+                                 <option value="pending">Pending</option>
+                                 <option value="completed">Completed</option>
                               </select>
                               <div class="flex-btn">
                                  <input type="submit" value="update" class="btn" name="update_payment">
-                                 <a href="placed_orders.php?delete=<?= $fetch_orders['id']; ?>" class="delete-btn" onclick="return confirm('delete this order?');">delete</a>
+                                 <a href="placed_orders.php?delete=<?= $fetch_orders['id']; ?>" class="delete-btn" onclick="return confirm('Delete this order?');">delete</a>
                               </div>
                            </form>
                         </td>
@@ -115,22 +127,17 @@ if (isset($_GET['delete'])) {
                <?php
                   }
                } else {
-                  echo '<p class="empty">no orders placed yet!</p>';
+                  echo '<p class="empty">No orders found!</p>';
                }
                ?>
             </tbody>
          </table>
       </div>
 
-
-
    </section>
 
    <!-- placed orders section ends -->
 
-   <!-- placed orders section ends -->
-
-   <!-- custom js file link  -->
    <script src="../js/admin_script.js"></script>
 
 </body>

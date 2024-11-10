@@ -11,7 +11,6 @@ if (!isset($admin_id)) {
 };
 
 if (isset($_POST['update_payment'])) {
-
    $order_id = $_POST['order_id'];
    $payment_status = $_POST['payment_status'];
    $update_status = $conn->prepare("UPDATE `orders` SET payment_status = ? WHERE id = ?");
@@ -24,6 +23,11 @@ if (isset($_GET['delete'])) {
    $delete_order = $conn->prepare("DELETE FROM `orders` WHERE id = ?");
    $delete_order->execute([$delete_id]);
    header('location:placed_orders.php');
+}
+
+$order_number = ''; // Biến lưu số order để lọc
+if (isset($_POST['search_order'])) {
+   $order_number = $_POST['order_number'];
 }
 
 ?>
@@ -44,7 +48,6 @@ if (isset($_GET['delete'])) {
    <link rel="stylesheet" href="../css/dashboard_style.css">
    <link rel="stylesheet" href="../css/table.css">
 
-
 </head>
 
 <body>
@@ -60,8 +63,10 @@ if (isset($_GET['delete'])) {
       <div class="table_header">
          <p>Order Details</p>
          <div>
-            <input placeholder="Order number">
-            <button class="add_new">Search</button>
+            <form method="post">
+               <input type="text" name="order_number" placeholder="Order number" value="<?= htmlspecialchars($order_number); ?>">
+               <button type="submit" name="search_order" class="add_new">Search</button>
+            </form>
          </div>
       </div>
 
@@ -83,13 +88,19 @@ if (isset($_GET['delete'])) {
             </thead>
             <tbody>
                <?php
-               $select_orders = $conn->prepare("SELECT * FROM `orders`");
-               $select_orders->execute();
+               if (!empty($order_number)) {
+                  $select_orders = $conn->prepare("SELECT * FROM `orders` WHERE id LIKE ?");
+                  $select_orders->execute(["%{$order_number}%"]);
+               } else {
+                  $select_orders = $conn->prepare("SELECT * FROM `orders`");
+                  $select_orders->execute();
+               }
+
                if ($select_orders->rowCount() > 0) {
                   while ($fetch_orders = $select_orders->fetch(PDO::FETCH_ASSOC)) {
                ?>
                      <tr>
-                        <td><?= $fetch_orders['user_id']; ?></td>
+                        <td><?= $fetch_orders['id']; ?></td>
                         <td><?= $fetch_orders['placed_on']; ?></td>
                         <td><?= $fetch_orders['name']; ?></td>
                         <td><?= $fetch_orders['email']; ?></td>
@@ -116,14 +127,12 @@ if (isset($_GET['delete'])) {
                <?php
                   }
                } else {
-                  echo '<p class="empty">no orders placed yet!</p>';
+                  echo '<p class="empty">no orders found!</p>';
                }
                ?>
             </tbody>
          </table>
       </div>
-
-
 
    </section>
 

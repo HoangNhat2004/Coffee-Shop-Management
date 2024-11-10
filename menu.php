@@ -98,7 +98,7 @@ include 'components/add_cart.php';
 
          <div class="swiper-wrapper">
             <?php
-            $select_products = $conn->prepare("SELECT * FROM `products` where category='main dish'");
+            $select_products = $conn->prepare("SELECT * FROM `products` where category='fast food'");
             $select_products->execute();
             if ($select_products->rowCount() > 0) {
                while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {

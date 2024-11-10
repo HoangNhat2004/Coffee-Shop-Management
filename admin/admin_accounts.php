@@ -17,6 +17,13 @@ if (isset($_GET['delete'])) {
    header('location:admin_accounts.php');
 }
 
+// Lọc theo tên admin nếu có tìm kiếm
+if (isset($_POST['search_admin'])) {
+   $search_name = $_POST['admin_name'];
+} else {
+   $search_name = '';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +40,6 @@ if (isset($_GET['delete'])) {
    <link rel="stylesheet" href="../css/dashboard_style.css">
    <link rel="stylesheet" href="../css/table.css">
 
-
 </head>
 
 <body>
@@ -48,14 +54,20 @@ if (isset($_GET['delete'])) {
 
       <div class="table_header">
          <p>Admin Details</p>
-         <div>
-            <input placeholder="Admin name">
-            <button class="add_new">Search</button>
-            <a href="register_admin.php"><button class="add_new">Add Admin</button></a>
+         <div style="display: flex; flex-direction: row;">
+            <!-- Form tìm kiếm admin theo tên -->
+            <form method="post">
+               <input type="text" name="admin_name" placeholder="Admin name" value="<?= htmlspecialchars($search_name); ?>">
+               <button type="submit" name="search_admin" class="add_new">Search</button>
+            </form>
+            <div style="padding: 0 5px;">
+               <a href="register_admin.php"><button class="add_new">Add Admin</button></a>
+            </div>
+            <!-- Nút Add Admin dẫn đến trang đăng ký admin -->
+            
          </div>
       </div>
 
-      </div>
       <div>
          <table class="table">
             <thead>
@@ -67,8 +79,15 @@ if (isset($_GET['delete'])) {
             </thead>
             <tbody>
                <?php
-               $select_account = $conn->prepare("SELECT * FROM `admin`");
-               $select_account->execute();
+               // Truy vấn tìm kiếm theo tên admin nếu có
+               if ($search_name != '') {
+                  $select_account = $conn->prepare("SELECT * FROM `admin` WHERE name LIKE ?");
+                  $select_account->execute(["%{$search_name}%"]);
+               } else {
+                  $select_account = $conn->prepare("SELECT * FROM `admin`");
+                  $select_account->execute();
+               }
+
                if ($select_account->rowCount() > 0) {
                   while ($fetch_accounts = $select_account->fetch(PDO::FETCH_ASSOC)) {
                ?>

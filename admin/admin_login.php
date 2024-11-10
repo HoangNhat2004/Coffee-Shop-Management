@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
    <section class="box">
 
       <form action="" method="POST">
-         <h1>Admin logIn</h1>
+         <h1>Admin login</h1>
          <ul>
             <li><label for="name">User name</label></li>
             <li><input type="text" name="name" maxlength="20" required placeholder="" oninput="this.value = this.value.replace(/\s/g, '')"></li>

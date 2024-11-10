@@ -112,12 +112,20 @@ if (isset($_GET['delete'])) {
       <div class="table_header">
          <p>Product Details</p>
          <div>
-            <input placeholder="Product name">
-            <button class="add_new">Search</button>
+            <form action="" method="GET">
+               <input type="text" name="search" placeholder="Product name" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+               <select name="category_filter" class="box">
+                  <option value="" selected>All Categories</option>
+                  <option value="coffee" <?php if (isset($_GET['category_filter']) && $_GET['category_filter'] == 'coffee') echo 'selected'; ?>>Coffee</option>
+                  <option value="fast food" <?php if (isset($_GET['category_filter']) && $_GET['category_filter'] == 'fast food') echo 'selected'; ?>>Fast food</option>
+                  <option value="drinks" <?php if (isset($_GET['category_filter']) && $_GET['category_filter'] == 'drinks') echo 'selected'; ?>>Drinks</option>
+                  <option value="desserts" <?php if (isset($_GET['category_filter']) && $_GET['category_filter'] == 'desserts') echo 'selected'; ?>>Desserts</option>
+               </select>
+               <button type="submit" class="add_new">Search</button>
+            </form>
          </div>
       </div>
 
-      </div>
       <div>
          <table class="table">
             <thead>
@@ -126,14 +134,27 @@ if (isset($_GET['delete'])) {
                   <th>Photo</th>
                   <th>Name</th>
                   <th>Price</th>
-                  <th>Catagory</th>
+                  <th>Category</th>
                   <th>Action</th>
                </tr>
             </thead>
             <tbody>
                <?php
-               $show_products = $conn->prepare("SELECT * FROM `products`");
-               $show_products->execute();
+               $search_query = isset($_GET['search']) ? $_GET['search'] : '';
+               $category_filter = isset($_GET['category_filter']) ? $_GET['category_filter'] : '';
+
+               // Xây dựng truy vấn SQL dựa trên các điều kiện tìm kiếm
+               $sql = "SELECT * FROM `products` WHERE name LIKE ?";
+               $params = ['%' . $search_query . '%'];
+               
+               if ($category_filter) {
+                  $sql .= " AND category = ?";
+                  $params[] = $category_filter;
+               }
+
+               $show_products = $conn->prepare($sql);
+               $show_products->execute($params);
+               
                if ($show_products->rowCount() > 0) {
                   while ($fetch_products = $show_products->fetch(PDO::FETCH_ASSOC)) {
                ?>
@@ -144,7 +165,6 @@ if (isset($_GET['delete'])) {
                         <td><span>$</span><?= $fetch_products['price']; ?><span></td>
                         <td><?= $fetch_products['category']; ?></td>
 
-
                         <td>
                            <a href="update_product.php?update=<?= $fetch_products['id']; ?>"><button><i class="fa-solid fa-pen-to-square"></i></button></a>
                            <a href="products.php?delete=<?= $fetch_products['id']; ?>" onclick="return confirm('Delete this product?');"><button><i class="fa-solid fa-trash"></i></button></a>
@@ -154,7 +174,7 @@ if (isset($_GET['delete'])) {
                <?php
                   }
                } else {
-                  echo '<p class="empty">no products added yet!</p>';
+                  echo '<p class="empty">No products found!</p>';
                }
                ?>
             </tbody>

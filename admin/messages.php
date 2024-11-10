@@ -17,6 +17,13 @@ if (isset($_GET['delete'])) {
    header('location:messages.php');
 }
 
+// Lọc theo tên khách hàng nếu có tìm kiếm
+if (isset($_POST['search_message'])) {
+   $customer_name = $_POST['customer_name'];
+} else {
+   $customer_name = '';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -45,17 +52,19 @@ if (isset($_GET['delete'])) {
 
    <section class="messages">
 
-      <h1 class="heading">messages manage</h1>
+      <h1 class="heading">Messages Management</h1>
 
       <div class="table_header">
          <p>Message Details</p>
          <div>
-            <input placeholder="Customer name">
-            <button class="add_new">Search</button>
+            <!-- Form tìm kiếm theo tên khách hàng -->
+            <form method="post">
+               <input type="text" name="customer_name" placeholder="Customer name" value="<?= htmlspecialchars($customer_name); ?>">
+               <button type="submit" name="search_message" class="add_new">Search</button>
+            </form>
          </div>
       </div>
 
-      </div>
       <div>
          <table class="table">
             <thead>
@@ -69,8 +78,15 @@ if (isset($_GET['delete'])) {
             </thead>
             <tbody>
                <?php
-               $select_messages = $conn->prepare("SELECT * FROM `messages`");
-               $select_messages->execute();
+               // Truy vấn tìm kiếm theo tên khách hàng nếu có
+               if ($customer_name != '') {
+                  $select_messages = $conn->prepare("SELECT * FROM `messages` WHERE name LIKE ?");
+                  $select_messages->execute(["%{$customer_name}%"]);
+               } else {
+                  $select_messages = $conn->prepare("SELECT * FROM `messages`");
+                  $select_messages->execute();
+               }
+
                if ($select_messages->rowCount() > 0) {
                   while ($fetch_messages = $select_messages->fetch(PDO::FETCH_ASSOC)) {
                ?>
@@ -84,7 +100,7 @@ if (isset($_GET['delete'])) {
                <?php
                   }
                } else {
-                  echo '<p class="empty">you have no messages</p>';
+                  echo '<p class="empty">No messages found</p>';
                }
                ?>
             </tbody>

@@ -241,7 +241,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         $numbers_of_users = $select_users->rowCount();
                         ?>
                         <div>
-                            <div class="numbers"><?= $numbers_of_products; ?></div>
+                            <div class="numbers"><?= $numbers_of_users; ?></div>
                             <div class="cardName">Users accounts</div>
                         </div>
 
@@ -277,7 +277,7 @@ $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                         $numbers_of_employees = $select_employees->rowCount();
                         ?>
                         <div>
-                            <div class="numbers"><?= $numbers_of_admins; ?></div>
+                            <div class="numbers"><?= $numbers_of_employees; ?></div>
                             <div class="cardName">Employees accounts</div>
                         </div>
 

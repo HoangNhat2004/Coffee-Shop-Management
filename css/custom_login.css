@@ -11,7 +11,7 @@ h1 {
 }
 
 form {
-  width: 40rem;
+  width: 20rem;
   margin: auto;
   background-color: rgb(246, 250, 255);
   padding: 1rem;
@@ -45,6 +45,7 @@ select {
   display: block;
   border-radius: 4px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 textarea {
@@ -98,4 +99,14 @@ button {
 
 .inline-control input {
   width: auto;
+}
+
+.register_button a{
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.register_button{
+  margin-top: 5px;
+  width: 100%;
 }

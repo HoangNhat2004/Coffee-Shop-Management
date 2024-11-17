@@ -60,7 +60,6 @@ if (isset($_POST['submit'])) {
    <!-- admin login form section starts  -->
 
    <section class="box">
-
       <form action="" method="POST">
          <h1>Admin login</h1>
          <ul>
@@ -71,12 +70,11 @@ if (isset($_POST['submit'])) {
          </ul>
          <label for="name"></label>
          <input type="submit" value="Login now" name="submit" class="button">
+         <button class="register_button">
+            <a href="register_admin.php">Register now</a>
+         </button>
       </form>
-
    </section>
-
    <!-- admin login form section ends -->
-
 </body>
-
 </html>

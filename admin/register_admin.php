@@ -55,6 +55,13 @@ if (isset($_POST['submit'])) {
    <!-- custom css file link  -->
    <link rel="stylesheet" href="../css/dashboard_style.css">
 
+   <style>
+      .btn a {
+         text-decoration: none;
+         color: var(--white-color);
+      }
+   </style>
+
 </head>
 
 <body>
@@ -71,6 +78,9 @@ if (isset($_POST['submit'])) {
          <input type="password" name="pass" maxlength="20" required placeholder="Enter your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
          <input type="password" name="cpass" maxlength="20" required placeholder="Confirm your password" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
          <input type="submit" value="Register Now" name="submit" class="btn">
+         <button class="btn">
+            <a href="admin_login.php">Login</a>
+         </button>
       </form>
 
    </section>

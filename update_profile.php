@@ -98,7 +98,11 @@ if (isset($_POST['submit'])) {
          }
       }
 
-      if (!$changes_made && $update_allowed) {
+      if ($changes_made) {
+         $message[] = 'Profile updated successfully!';
+         header('Location: checkout.php');
+         exit; 
+      } else if (!$changes_made && $update_allowed) {
          $message[] = 'No changes were made.';
       }
    }
